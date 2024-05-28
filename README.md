@@ -1,2 +1,2 @@
 # accommodation
-Accomodation service for booking application
+Accommodation service for booking application
