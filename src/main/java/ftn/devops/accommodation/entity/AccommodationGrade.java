@@ -1,10 +1,10 @@
 package ftn.devops.accommodation.entity;
 
+import ftn.devops.accommodation.entity.view.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -19,18 +19,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Table(name = "availabilities")
-public class Availability extends BaseEntity {
+@Table(name = "accommodation_grades")
+public class AccommodationGrade extends BaseEntity {
 
-    private LocalDate startDate;
+    private Integer grade;
 
-    private LocalDate endDate;
-
-    private Float price;
-
-    private boolean isPriceForPerson;
-
-    private boolean autoConfirm;
+    @ManyToOne
+    @JoinColumn(name = "reviewer_id", nullable = false)
+    private User reviewer;
 
     @ManyToOne
     @JoinColumn(name = "accommodation_id", nullable = false)

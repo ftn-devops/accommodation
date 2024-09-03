@@ -1,18 +1,21 @@
 package ftn.devops.accommodation.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import ftn.devops.accommodation.entity.view.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Entity
 @Getter
@@ -21,29 +24,31 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Table(name = "accommodation")
+@Table(name = "accommodations")
 public class Accommodation extends BaseEntity {
 
     private String name;
-
-    private String hostId;
 
     private String address;
 
     private String description;
 
-    private int minGuestNumber;
+    private Integer minGuestNumber;
 
-    private int maxGuestNumber;
+    private Integer maxGuestNumber;
 
-    private Float avgRate;
+    private Float averageGrade;
 
-    private List<String> images;
+    @ManyToOne
+    @JoinColumn(name = "host_id", nullable = false)
+    private User host;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "accommodation",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Availability> availabilities;
+    @OneToMany(mappedBy = "accommodation", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private Set<Image> images = new HashSet<>();
 
-    private List<String> rates;
+    @OneToMany(mappedBy = "accommodation", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private Set<AccommodationGrade> grades = new HashSet<>();
 
+    @OneToMany(mappedBy = "accommodation", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private Set<Availability> availabilities = new HashSet<>();
 }

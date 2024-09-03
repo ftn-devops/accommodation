@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -19,18 +18,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Table(name = "availabilities")
-public class Availability extends BaseEntity {
+@Table(name = "images")
+public class Image extends BaseEntity{
 
-    private LocalDate startDate;
-
-    private LocalDate endDate;
-
-    private Float price;
-
-    private boolean isPriceForPerson;
-
-    private boolean autoConfirm;
+    private String path;
 
     @ManyToOne
     @JoinColumn(name = "accommodation_id", nullable = false)

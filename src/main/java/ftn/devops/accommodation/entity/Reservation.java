@@ -1,6 +1,9 @@
 package ftn.devops.accommodation.entity;
 
+import ftn.devops.accommodation.entity.view.User;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -19,8 +22,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Table(name = "availabilities")
-public class Availability extends BaseEntity {
+@Table(name = "reservations")
+public class Reservation extends BaseEntity {
 
     private LocalDate startDate;
 
@@ -28,9 +31,14 @@ public class Availability extends BaseEntity {
 
     private Float price;
 
-    private boolean isPriceForPerson;
+    private Integer numberOfPersons;
 
-    private boolean autoConfirm;
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus reservationStatus;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "accommodation_id", nullable = false)
