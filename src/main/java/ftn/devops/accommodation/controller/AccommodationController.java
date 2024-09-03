@@ -1,5 +1,6 @@
 package ftn.devops.accommodation.controller;
 
+import ftn.devops.accommodation.dto.NewAccommodationDTO;
 import ftn.devops.accommodation.dto.SearchObject;
 import ftn.devops.accommodation.entity.Accommodation;
 import ftn.devops.accommodation.entity.Availability;
@@ -30,7 +31,7 @@ public class AccommodationController {
         return ResponseEntity.ok().body(accommodationService.searchAccommodations(searchObject));
     }
     @PostMapping("/addAccommodation")
-    public ResponseEntity<List<Accommodation>> addAccommodation(@RequestBody Accommodation accommodation){
+    public ResponseEntity<List<Accommodation>> addAccommodation(@RequestBody NewAccommodationDTO accommodation){
         accommodationService.addAccommodation(accommodation);
         return ResponseEntity.ok().body(accommodationService.getAllAccommodations());
     }

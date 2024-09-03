@@ -14,9 +14,4 @@ public interface AccommodationRepository extends JpaRepository<Accommodation,Int
             where upper(a.address) like upper(concat('%', ?1, '%')) and a.minGuestNumber <= ?2 and a.maxGuestNumber >= ?2""")
     List<Accommodation> searchAccommodations(String address, int guestNumber);
 
-    @Query("""
-            select a from Accommodation a
-            where upper(a.address) like upper(?1) and a.minGuestNumber <= ?2 and a.maxGuestNumber >= ?2""")
-    List<Accommodation> searchAccommodationss(String address, int guestNumber);
-
 }

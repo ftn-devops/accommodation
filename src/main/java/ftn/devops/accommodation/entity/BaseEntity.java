@@ -34,17 +34,11 @@ abstract class BaseEntity implements Serializable {
     @CreatedDate
     private Date createdAt;
 
-    @Column(updatable = false, columnDefinition = "BINARY(16)")
-    @CreatedBy
-    private Integer createdBy;
 
     @Temporal(TIMESTAMP)
-    @Column(nullable = false)
+    @Column(nullable = true)
     @LastModifiedDate
     private Date updatedAt;
 
-    @Column(columnDefinition = "BINARY(16)")
-    @LastModifiedBy
-    private Integer updatedBy;
 
 }

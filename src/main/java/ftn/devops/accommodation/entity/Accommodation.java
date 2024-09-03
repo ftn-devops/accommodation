@@ -1,5 +1,7 @@
 package ftn.devops.accommodation.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import ftn.devops.accommodation.dto.NewAccommodationDTO;
 import ftn.devops.accommodation.entity.view.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -43,12 +45,24 @@ public class Accommodation extends BaseEntity {
     @JoinColumn(name = "host_id", nullable = false)
     private User host;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "accommodation", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<Image> images = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "accommodation", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<AccommodationGrade> grades = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "accommodation", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<Availability> availabilities = new HashSet<>();
+
+    public Accommodation(NewAccommodationDTO accommodationDTO){
+        this.name = accommodationDTO.getName();
+        this.address = accommodationDTO.getAddress();
+        this.description = accommodationDTO.getDescription();
+        this.minGuestNumber = accommodationDTO.getMinGuestNumber();
+        this.maxGuestNumber = accommodationDTO.getMaxGuestNumber();
+
+    }
 }
