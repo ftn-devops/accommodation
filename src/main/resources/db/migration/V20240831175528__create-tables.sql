@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users
 
 CREATE TABLE IF NOT EXISTS accommodations
 (
-    id               INT          NOT NULL PRIMARY KEY,
+    id               SERIAL          NOT NULL PRIMARY KEY,
     created_at       DATE         NOT NULL,
     created_by       INT          NULL,
     updated_at       DATE         NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS accommodations
 
 CREATE TABLE IF NOT EXISTS accommodation_grades
 (
-    id               INT  NOT NULL PRIMARY KEY,
+    id               SERIAL  NOT NULL PRIMARY KEY,
     created_at       DATE NOT NULL,
     created_by       INT  NULL,
     updated_at       DATE NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS accommodation_grades
 
 CREATE TABLE IF NOT EXISTS availabilities
 (
-    id                  INT     NOT NULL PRIMARY KEY,
+    id                  SERIAL     NOT NULL PRIMARY KEY,
     created_at          DATE    NOT NULL,
     created_by          INT     NULL,
     updated_at          DATE    NOT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS availabilities
 
 CREATE TABLE IF NOT EXISTS reservation
 (
-    id                 INT          NOT NULL PRIMARY KEY,
+    id                 SERIAL          NOT NULL PRIMARY KEY,
     created_at         DATE         NOT NULL,
     created_by         INT          NULL,
     updated_at         DATE         NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS reservation
 
 CREATE TABLE IF NOT EXISTS images
 (
-    id               INT          NOT NULL PRIMARY KEY,
+    id               SERIAL          NOT NULL PRIMARY KEY,
     created_at       DATE         NOT NULL,
     created_by       INT          NULL,
     updated_at       DATE         NOT NULL,
