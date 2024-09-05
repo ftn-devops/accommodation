@@ -1,5 +1,6 @@
 package ftn.devops.accommodation.entity;
 
+import ftn.devops.accommodation.dto.ReservationDTO;
 import ftn.devops.accommodation.entity.view.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -43,4 +44,12 @@ public class Reservation extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "accommodation_id", nullable = false)
     private Accommodation accommodation;
+
+    public Reservation(ReservationDTO reservationDTO){
+        this.startDate = reservationDTO.getStartDate().toLocalDate();
+        this.endDate = reservationDTO.getEndDate().toLocalDate();
+        this.price = reservationDTO.getPrice();
+        this.numberOfPersons = reservationDTO.getNumberOfPersons();
+
+    }
 }
