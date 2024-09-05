@@ -1,5 +1,6 @@
 package ftn.devops.accommodation.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -34,6 +35,7 @@ public class Availability extends BaseEntity {
 
     private boolean autoConfirm;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "accommodation_id", nullable = false)
     private Accommodation accommodation;

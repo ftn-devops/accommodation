@@ -2,6 +2,7 @@ package ftn.devops.accommodation.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import ftn.devops.accommodation.dto.NewAccommodationDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import ftn.devops.accommodation.entity.view.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -46,15 +47,15 @@ public class Accommodation extends BaseEntity {
     private User host;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "accommodation", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "accommodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Image> images = new HashSet<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "accommodation", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "accommodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<AccommodationGrade> grades = new HashSet<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "accommodation", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "accommodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Availability> availabilities = new HashSet<>();
 
     public Accommodation(NewAccommodationDTO accommodationDTO){
