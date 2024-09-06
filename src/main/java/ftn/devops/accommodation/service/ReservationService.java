@@ -5,6 +5,8 @@ import ftn.devops.accommodation.entity.Accommodation;
 import ftn.devops.accommodation.entity.Reservation;
 import ftn.devops.accommodation.entity.ReservationStatus;
 import ftn.devops.accommodation.entity.view.User;
+import ftn.devops.accommodation.messaging.messages.ReservationStatusUpdateMessage;
+import ftn.devops.accommodation.messaging.notifier.IAccommodationNotifier;
 import ftn.devops.accommodation.repository.AccommodationRepository;
 import ftn.devops.accommodation.repository.ReservationRepository;
 import ftn.devops.accommodation.repository.UserRepository;
@@ -27,6 +29,9 @@ public class ReservationService {
 
     @Autowired
     private AccommodationRepository accommodationRepository;
+
+    @Autowired
+    private IAccommodationNotifier accommodationNotifier;
 
 
     public boolean addReservation(ReservationDTO reservationDTO){
@@ -56,7 +61,8 @@ public class ReservationService {
         try{
             Reservation reservation = reservationRepository.getReferenceById(reservationDTO.getId());
             reservation.setReservationStatus(ReservationStatus.CONFIRMED);
-            reservationRepository.save(reservation);
+            var dbReservation = reservationRepository.save(reservation);
+            sendReservationChangedNotification(dbReservation);
             return true;
         }catch (Exception e){
             return false;
@@ -67,10 +73,21 @@ public class ReservationService {
         try{
             Reservation reservation = reservationRepository.getReferenceById(reservationDTO.getId());
             reservation.setReservationStatus(ReservationStatus.CANCELED);
-            reservationRepository.save(reservation);
+            var dbReservation = reservationRepository.save(reservation);
+            sendReservationChangedNotification(dbReservation);
             return true;
         }catch (Exception e){
             return false;
         }
+    }
+
+    private void sendReservationChangedNotification(Reservation reservation){
+        var message = ReservationStatusUpdateMessage.builder()
+            .reservationStatus(reservation.getReservationStatus().toString())
+            .recipientEmail(reservation.getUser().getEmail())
+            .accommodationName(reservation.getAccommodation().getName())
+            .build();
+
+        accommodationNotifier.fireReservationStatusUpdateNotification(message);
     }
 }
