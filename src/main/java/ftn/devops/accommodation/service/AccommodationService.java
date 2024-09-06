@@ -1,5 +1,6 @@
 package ftn.devops.accommodation.service;
 
+import ftn.devops.accommodation.dto.AvailabilityDTO;
 import ftn.devops.accommodation.dto.NewAccommodationDTO;
 import ftn.devops.accommodation.dto.SearchObject;
 import ftn.devops.accommodation.entity.Accommodation;
@@ -40,10 +41,18 @@ public class AccommodationService {
         accommodation.setUpdatedAt(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)));
         accommodationRepository.save(accommodation);
     }
-    public void addAvailability(Availability availability){
-        availability.setCreatedAt(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)));
-        availability.setUpdatedAt(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)));
-        availabilityRepository.save(availability);
+    public boolean addAvailability(AvailabilityDTO availabilityDTO){
+        try{
+            Availability availability = new Availability(availabilityDTO);
+            Accommodation accommodation = accommodationRepository.getReferenceById(Integer.parseInt(availabilityDTO.getAccommodationId()));
+            availability.setAccommodation(accommodation);
+            availability.setCreatedAt(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)));
+            availability.setUpdatedAt(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)));
+            availabilityRepository.save(availability);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
     public List<Availability> searchAccommodations(SearchObject searchObject){
         return availabilityRepository.searchAvailability(searchObject.getAddress(),searchObject.getGuestNumber(),searchObject.getStartDate(),searchObject.getEndDate());
