@@ -1,5 +1,6 @@
 package ftn.devops.accommodation.controller;
 
+import ftn.devops.accommodation.dto.AvailabilityDTO;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,9 @@ public class AccommodationController {
 
 
     @PostMapping("/addAvailability")
-    public ResponseEntity<List<Accommodation>> addAvailability(@RequestBody Availability availability){
-        accommodationService.addAvailability(availability);
-        return ResponseEntity.ok().body(accommodationService.getAllAccommodations());
+    public ResponseEntity<Boolean> addAvailability(@RequestBody AvailabilityDTO availability){
+        boolean ret = accommodationService.addAvailability(availability);
+        return ResponseEntity.ok().body(ret);
     }
 
 }
